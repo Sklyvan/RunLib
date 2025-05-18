@@ -43,9 +43,3 @@ def convertFitToDataframe(filePath: str, removeUnknown: bool = True) -> pd.DataF
     df.drop(columns=columnsToRemove, inplace=True)
 
     return df
-
-
-if __name__ == "__main__":
-    file = "/home/sklyvan/Downloads/Activity.fit"
-    DATAFRAME, HASH = convertFitToDataframe(file)
-    breakpoint()
