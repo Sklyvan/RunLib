@@ -1,6 +1,6 @@
 from .configuration import USERNAME, PASSWORD
 from garminconnect import Garmin
-from exceptions import *
+from .exceptions import *
 import zipfile
 import io
 
