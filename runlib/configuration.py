@@ -1,6 +1,11 @@
 import json
 import os
 
+FIT_FILES_DIRECTORY = "./data/activities/fit/"
+CSV_FILES_DIRECTORY = "./data/activities/csv/"
+
+os.makedirs(FIT_FILES_DIRECTORY, exist_ok=True)
+os.makedirs(CSV_FILES_DIRECTORY, exist_ok=True)
 
 SETTINGS_FILE_NAME = "Settings.json"
 SETTINGS_FILE_PATH = os.path.join(os.path.dirname(__file__), SETTINGS_FILE_NAME)
