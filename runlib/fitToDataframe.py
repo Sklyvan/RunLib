@@ -1,20 +1,21 @@
-from utils import semicirclesToDegrees
+from .utils import semicirclesToDegrees
 from fitparse import FitFile
-from configuration import *
+from .configuration import *
 import pandas as pd
 import re
+import io
 
 
-def convertFitToDataframe(filePath: str, removeUnknown: bool = True) -> pd.DataFrame:
+def convertFitToDataframe(fileContent: bytes, removeUnknown: bool = True) -> pd.DataFrame:
     """
     Convert a FIT file to a pandas DataFrame. The FIT file is a binary file format used for storing fitness data.
     The FIT file format is used by many fitness devices, such as GPS watches and heart rate monitors.
-    :param filePath: The path to the FIT file to convert to a pandas DataFrame.
+    :param fileContent: The FIT file to convert, this is the content of the file as bytes.
     :param removeUnknown: If True, remove unknown fields from the DataFrame.
     :return: A pandas DataFrame containing the data from the FIT file.
     """
     # Read the FIT file with the library
-    fitFile = FitFile(filePath)
+    fitFile = FitFile(io.BytesIO(fileContent))
     fitFileData = []
     
     # Extract data from the FIT file
