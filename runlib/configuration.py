@@ -1,4 +1,9 @@
 import json
+import os
+
+
+SETTINGS_FILE_NAME = "Settings.json"
+SETTINGS_FILE_PATH = os.path.join(os.path.dirname(__file__), SETTINGS_FILE_NAME)
 
 LATITUDE, LONGITUDE = "position_lat", "position_long"
 TIMESTAMP = "timestamp"
@@ -20,7 +25,7 @@ VERTICAL_OSCILLATION = "vertical_oscillation"
 VERTICAL_RATIO = "vertical_ratio"
 UNKNOWN_COLUMN_REGEX = r"unknown_\d+"
 
-with open("Settings.json", "r") as file:
+with open(SETTINGS_FILE_PATH, "r") as file:
     settings = json.load(file)
     USERNAME = settings["GarminConnectCredentials"]["Username"]
     PASSWORD = settings["GarminConnectCredentials"]["Password"]
