@@ -44,3 +44,15 @@ def convertFitToDataframe(fileContent: bytes, removeUnknown: bool = True) -> pd.
     df.drop(columns=columnsToRemove, inplace=True)
 
     return df
+
+
+def convertFitToDataframeFromFile(filePath: str, removeUnknown: bool = True) -> pd.DataFrame:
+    """
+    Convert a FIT file to a pandas DataFrame. The FIT file is a binary file format used for storing fitness data.
+    The FIT file format is used by many fitness devices, such as GPS watches and heart rate monitors.
+    :param filePath: The path to the FIT file to convert.
+    :param removeUnknown: If True, remove unknown fields from the DataFrame.
+    :return: A pandas DataFrame containing the data from the FIT file.
+    """
+    with open(filePath, "rb") as fitFile:
+        return convertFitToDataframe(fitFile.read(), removeUnknown)
