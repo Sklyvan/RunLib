@@ -1,3 +1,3 @@
 from .fitToDataframe import *
 from .configuration import *
-from .fetchFile import *
+from .fetchActivity import *
