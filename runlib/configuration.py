@@ -1,3 +1,5 @@
+import json
+
 LATITUDE, LONGITUDE = "position_lat", "position_long"
 TIMESTAMP = "timestamp"
 ACCUMULATED_POWER = "accumulated_power"
@@ -17,3 +19,8 @@ TEMPERATURE = "temperature"
 VERTICAL_OSCILLATION = "vertical_oscillation"
 VERTICAL_RATIO = "vertical_ratio"
 UNKNOWN_COLUMN_REGEX = r"unknown_\d+"
+
+with open("Settings.json", "r") as file:
+    settings = json.load(file)
+    USERNAME = settings["GarminConnectCredentials"]["Username"]
+    PASSWORD = settings["GarminConnectCredentials"]["Password"]
