@@ -1,3 +1,5 @@
+import garth.exc
+
 from .configuration import USERNAME, PASSWORD
 from garminconnect import Garmin
 from .exceptions import *
@@ -7,6 +9,20 @@ import io
 
 CLIENT = Garmin(USERNAME, PASSWORD)
 CLIENT.login()
+
+
+def obtainActivityByID(activityID: str) -> dict:
+    """
+    Obtain an activity by its ID from Garmin Connect and return the activity summary.
+    :param activityID: The ID of the activity to obtain.
+    :return: The activity summary.
+    """
+    try:
+        activity = CLIENT.get_activity(activityID)
+    except garth.exc.GarthHTTPError as e:
+        raise NoActivityFound(f"Activity with ID {activityID} not found.") from e
+    else:
+        return activity
 
 
 def obtainLatestActivityByType(activityType: str) -> dict:
@@ -45,13 +61,17 @@ def downloadActivityAsFIT(activityID: str) -> bytes:
     :param activityID: The ID of the activity to obtain.
     :return: The activity as a FIT file.
     """
-    activityZipFile =  CLIENT.download_activity(activityID, dl_fmt=Garmin.ActivityDownloadFormat.ORIGINAL)
-    zipBytes = io.BytesIO(activityZipFile) # The API returns the FIT files as ZIP files
+    try:
+        activityZipFile =  CLIENT.download_activity(activityID, dl_fmt=Garmin.ActivityDownloadFormat.ORIGINAL)
+    except garth.exc.GarthHTTPError as e:
+        raise NoActivityFound(f"Activity with ID {activityID} not found.") from e
+    else:
+        zipBytes = io.BytesIO(activityZipFile) # The API returns the FIT files as ZIP files
 
-    with zipfile.ZipFile(zipBytes, 'r') as zipRef:
-        for name in zipRef.namelist():
-            if name.endswith(".fit"):
-                return zipRef.read(name)  # This is the FIT file content as bytes
+        with zipfile.ZipFile(zipBytes, 'r') as zipRef:
+            for name in zipRef.namelist():
+                if name.endswith(".fit"):
+                    return zipRef.read(name)  # This is the FIT file content as bytes
 
     raise NoFitFileInZip(f"No FIT file found in the ZIP file for {activityID}.")
 
