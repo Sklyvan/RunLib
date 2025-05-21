@@ -1,7 +1,6 @@
-import garth.exc
-
 from .configuration import USERNAME, PASSWORD
 from garminconnect import Garmin
+import garth.exc
 from .exceptions import *
 import zipfile
 import io
