@@ -37,3 +37,5 @@ with open(SETTINGS_FILE_PATH, "r") as file:
 
     USERNAME = settings["GarminConnectCredentials"].get("Username", "")
     PASSWORD = settings["GarminConnectCredentials"].get("Password", "")
+
+    HEART_RATE_ZONES = settings["HeartRateZones"]
